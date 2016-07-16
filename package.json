@@ -3,16 +3,16 @@
   "version": "1.0.1",
   "description": "a simple but powerful graphQL query builder",
   "main": "index.js",
-  "bin": {
-  },
+  "bin": {},
   "directories": {
     "example": "example"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "chai": "^3.5.0",
-    "coveralls": "^2.11.11"
+    "coveralls": "^2.11.11",
+    "istanbul": "^0.4.4",
+    "mocha": "^2.5.3"
   },
   "scripts": {
     "test": "mocha ./test.js",
@@ -23,7 +23,13 @@
     "url": "git://github.com/codemeasandwich/graphql-query-builder.git"
   },
   "homepage": "https://github.com/codemeasandwich/graphql-query-builder",
-  "keywords": ["graphql","query","builder","generator","orm"],
+  "keywords": [
+    "graphql",
+    "query",
+    "builder",
+    "generator",
+    "orm"
+  ],
   "author": {
     "name": "Brian Shannon",
     "url": "https://github.com/codemeasandwich/"
