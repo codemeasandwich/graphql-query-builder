@@ -1,0 +1,15 @@
+# OS or Editor folders
+.DS_Store
+.cache
+.project
+.settings
+nbproject
+thumbs.db
+
+# Komodo
+*.komodoproject
+.komodotools
+
+# Folders to ignore
+node_modules
+coverage
