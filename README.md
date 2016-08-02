@@ -8,6 +8,8 @@
 
 a simple but powerful graphQL query builder
 
+### [Demo](https://tonicdev.com/codemeasandwich/57a0727c80254315001cb366)
+
 # Install
 
 `npm install graphql-query-builder`
