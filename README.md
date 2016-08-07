@@ -1,5 +1,7 @@
 # graphql-query-builder
 
+### If this was helpful, [★ it on github](https://github.com/codemeasandwich/graphql-query-builder)
+
 [![npm version](https://badge.fury.io/js/graphql-query-builder.svg)](https://badge.fury.io/js/graphql-query-builder)
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
 [![build](https://api.travis-ci.org/codemeasandwich/graphql-query-builder.svg)](https://travis-ci.org/codemeasandwich/graphql-query-builder)
@@ -8,7 +10,8 @@
 
 a simple but powerful graphQL query builder
 
-### [Demo](https://tonicdev.com/codemeasandwich/57a0727c80254315001cb366)
+
+### [Demo / Sandbox](https://tonicdev.com/codemeasandwich/57a0727c80254315001cb366) :thumbsup:
 
 # Install
 
