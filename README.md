@@ -17,6 +17,67 @@ a simple but powerful graphQL query builder
 
 `npm install graphql-query-builder`
 
+# Api
+
+### constructor
+query/mutator you wish to use, and an alias or filter arguments.
+
+| Argument (**one** to **two**)  | Description
+|--- |---
+| String | the name of the query function
+| * String / Object | (**optional**) This can be an `alias` or `filter` values 
+
+``` js
+let profilePicture = new Query("profilePicture",{size : 50});
+``` 
+
+### setAlias
+set an alias for this result.
+
+| Argument | Description
+|--- |---
+| String | The alias for this result
+
+``` js
+profilePicture.setAlias("MyPic");
+``` 
+
+### filter
+the parameters to run the query against.
+
+``` js
+profilePicture.filter({ height : 200, width : 200});
+``` 
+
+| Argument | Description
+|--- |---
+| Object | An object mapping attribute to values
+
+
+### find
+outlines the properties you wish to be returned from the query.
+
+| Argument (**one** to **many**) | Description
+|--- |---
+| String or Object |  representing each attribute you want Returned
+| ... | *same as above*
+
+``` js
+    profilePicture.find( { link : "uri"}, "width", "height");
+``` 
+
+### toString
+return to the formatted query string
+
+``` js
+  // A (ES6)
+  `${profilePicture}`;
+  // B
+  profilePicture+'';
+  // C
+  profilePicture.toString();
+``` 
+
 ## run samples
 
 ``` bash
