@@ -47,5 +47,38 @@ let user = new Query("user",{id : 123});
   }
     */
     
+// And another example
+
+let MessageRequest = { type:"chat", message:"yoyo",
+                   user:{
+                            name:"bob",
+                            screen:{
+                                    height:1080,
+                                    width:1920
+                                    }
+                    },
+                    friends:[
+                             {id:1,name:"ann"},
+                             {id:2,name:"tom"}
+                             ]
+                    };
+                    
+let MessageQuery = new Query("Message","myPost");
+    MessageQuery.filter(MessageRequest);
+    MessageQuery.find({ messageId : "id"}, {postedTime : "createTime" });
+    
+    console.log(MessageQuery);
+    
+    /*
+    myPost:Message( type:"chat",
+                    message:"yoyo",
+                    user:{name:"bob",screen:{height:1080,width:1920}},
+                    friends:[{id:1,name:"ann"},{id:2,name:"tom"}])
+        {
+            messageId : id,
+            postedTime : createTime
+        }
+    */
+    
 ```
 

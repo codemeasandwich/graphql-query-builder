@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 //=====================================================
 //============================ parce properties to find
@@ -23,7 +23,7 @@ function parceFind(_levelA) {
             let propS = propsA[0];
             let item = itemX[propS];
             return `${propS} : ${item} `;
-        } else if ( "string" === typeof itemX ) {   
+        } else if ( "string" === typeof itemX ) {
             return itemX;
         } else {
             throw new RangeError("cannot handle Find value of "+itemX);
@@ -32,6 +32,48 @@ function parceFind(_levelA) {
     
     return propsA.join(",");
 }
+
+//=====================================================
+//=================================== get GraphQL Value
+//=====================================================
+
+function getGraphQLValue(value) {
+      if ("string" === typeof value) {
+        value = JSON.stringify(value)
+      } else if (Array.isArray(value)) {
+        value = value.map(item => {
+            return getGraphQLValue(item);
+            }).join();
+        value = `[${value}]`;
+      } else if ("object" === typeof value) {
+      /*if (value.toSource)
+            value = value.toSource().slice(2,-2);
+        else*/
+            value = objectToString(value);
+            //console.error("No toSource!!",value);
+      }
+      return value;
+}
+
+function objectToString(obj) {
+    
+  let sourceA = [];
+  
+  for(let prop in obj){
+    if ("function" === typeof obj[prop]) {
+      continue;
+    }
+   // if ("object" === typeof obj[prop]) {
+        sourceA.push(`${prop}:${getGraphQLValue(obj[prop])}`);
+   // } else {
+   //      sourceA.push(`${prop}:${obj[prop]}`);
+   // }
+  }
+  return `{${sourceA.join()}}`;
+}
+
+
+
 
 //=====================================================
 //========================================= Query Class
@@ -45,7 +87,14 @@ function Query(_fnNameS, _aliasS_OR_Filter){
     this.filter = (filtersO) => {
  
         for(let propS in filtersO){
-            this.headA.push( `${propS}:${("string" === typeof filtersO[propS])?JSON.stringify(filtersO[propS]):filtersO[propS]}` );
+            if ("function" === typeof filtersO[propS]) {
+              continue;
+            }
+            let val = getGraphQLValue(filtersO[propS]);
+            if ("{}" === val) {
+              continue;
+            }
+            this.headA.push( `${propS}:${val}` );
          } 
         return this;
     };

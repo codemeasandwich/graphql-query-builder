@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 var expect = require('chai').expect;
 var Query = require('./index');
 
@@ -11,7 +11,7 @@ describe("graphql query builder", function() { //log the function
 	it('should allow function chaining', function(){
 		
 		let expeted = `user{name}`;
-		let user = new Query("user").find("name")
+		let user = new Query("user").find("name");
 		
 		expect(removeSpaces(expeted)).to.equal(removeSpaces(user));
 	})
@@ -19,7 +19,7 @@ describe("graphql query builder", function() { //log the function
 	it('should create a Query with function name & alia', function(){
 		
 		let expeted = `sam : user{name}`;
-		let user = new Query("user","sam").find("name")
+		let user = new Query("user","sam").find("name");
 		
 		expect(removeSpaces(expeted)).to.equal(removeSpaces(user));
 	})
@@ -27,7 +27,7 @@ describe("graphql query builder", function() { //log the function
 	it('should create a Query with function name & input', function(){
 		
 		let expeted = `user(id:12345){name}`;
-		let user = new Query("user",{id : 12345}).find("name")
+		let user = new Query("user",{id : 12345}).find("name");
 		
 		expect(removeSpaces(expeted)).to.equal(removeSpaces(user));
 	})
@@ -35,21 +35,21 @@ describe("graphql query builder", function() { //log the function
 	it('should create a Query with function name & input(s)', function(){
 		
 		let expeted = `user(id:12345, age:34){name}`;
-		let user = new Query("user",{id : 12345, age:34}).find("name")
+		let user = new Query("user",{id : 12345, age:34}).find("name");
 		
 		expect(removeSpaces(expeted)).to.equal(removeSpaces(user));
 	})
 	
 	it('should accept a single find value', function(){
 		let expeted = `user{name}`;
-		let user = new Query("user").find("name")
+		let user = new Query("user").find("name");
 		
 		expect(removeSpaces(expeted)).to.equal(removeSpaces(user));
 	})
 	
 	it('should accept a single find value with alia', function(){
 		let expeted = `user{nickname:name}`;
-		let user = new Query("user").find({nickname:"name"})
+		let user = new Query("user").find({nickname:"name"});
 		
 		expect(removeSpaces(expeted)).to.equal(removeSpaces(user));
 	})
@@ -63,7 +63,7 @@ describe("graphql query builder", function() { //log the function
 	
 	it('should accept an array find values', function(){
 		let expeted = `user{firstname, lastname}`;
-		let user = new Query("user").find(["firstname","lastname"])
+		let user = new Query("user").find(["firstname","lastname"]);
 		
 		expect(removeSpaces(expeted)).to.equal(removeSpaces(user));
 	})
@@ -83,7 +83,7 @@ describe("graphql query builder", function() { //log the function
 			profilePicture.find( "uri", "width", "height");
 			
 		let user = new Query("user",{id : 12345});
-			user.find(["id", {"nickname":"name"}, "isViewerFriend",  {"image":profilePicture}])
+			user.find(["id", {"nickname":"name"}, "isViewerFriend",  {"image":profilePicture}]);
 
 		expect(removeSpaces(expeted)).to.equal(removeSpaces(user));
 	})
@@ -112,6 +112,86 @@ describe("graphql query builder", function() { //log the function
 		FetchLeeAndSam.find(lee,sam);
 		
 		expect(removeSpaces(expeted)).to.equal(removeSpaces(FetchLeeAndSam));
+	})
+	
+	it('should work with nasted objects and lists', function(){
+    
+let expeted ='myPost:Message(type:"chat",message:"yoyo",user:{name:"bob",screen:{height:1080,width:1920}},friends:[{id:1,name:"ann"},{id:2,name:"tom"}])  { messageId : id, postedTime : createTime }';
+
+let MessageRequest = {type:"chat",
+                   message:"yoyo",
+                   user:{
+                            name:"bob",
+                            screen:{
+                                    height:1080,
+                                    width:1920}
+                                    },
+                    friends:[
+                             {id:1,name:"ann"},
+                             {id:2,name:"tom"}
+                             ]
+                    };
+
+let MessageQuery = new Query("Message","myPost");
+    MessageQuery.filter(MessageRequest);
+    MessageQuery.find({ messageId : "id"}, {postedTime : "createTime" });
+    
+		expect(removeSpaces(expeted)).to.equal(removeSpaces(MessageQuery));
+    
+	})
+	
+	it('should work with objects that have help functions(will skip function name)', function(){
+    
+    let expeted ='inventory(toy:"jack in the box")  { id }';
+    
+    let ChildsToy = {
+                       toy:"jack in the box",
+                       getState:function(){  }
+                     };
+                     
+    ChildsToy.getState();//for istanbul(coverage) to say all fn was called
+    
+    let ItemQuery = new Query("inventory",ChildsToy);
+        ItemQuery.find("id");
+    
+		expect(removeSpaces(expeted)).to.equal(removeSpaces(ItemQuery));
+    
+	})
+	
+	it('should work with nasted objects that have help functions(will skip function name)', function(){
+    
+    let expeted ='inventory(toy:"jack in the box")  { id }';
+    
+    let ChildsToy = {
+                       toy:"jack in the box",
+                       utils: {
+                        getState:function(){  }
+                       }
+                     };
+    
+    ChildsToy.utils.getState();//for istanbul(coverage) to say all fn was called
+    
+    let ItemQuery = new Query("inventory",ChildsToy);
+        ItemQuery.find("id");
+    
+		expect(removeSpaces(expeted)).to.equal(removeSpaces(ItemQuery));
+    
+	})
+	
+	it('should skip empty objects in filter/args', function(){
+    
+    let expeted ='inventory(toy:"jack in the box")  { id }';
+    
+    let ChildsToy = {
+                       toy:"jack in the box",
+                       utils: {
+                       }
+                     };
+    
+    let ItemQuery = new Query("inventory",ChildsToy);
+        ItemQuery.find("id");
+    
+		expect(removeSpaces(expeted)).to.equal(removeSpaces(ItemQuery));
 	})
 	
 	it('should throw Error if find input items have zero props', function(){
@@ -143,4 +223,5 @@ describe("graphql query builder", function() { //log the function
 		expect(() => new Query("x",true)).to.throw(Error);
 	})
 });
+
 
