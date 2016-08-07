@@ -10,14 +10,20 @@
 
 a simple but powerful graphQL query builder
 
+*tested on [**NodeJS**](https://nodejs.org) and [**Webpack**](https://webpack.github.io)*
 
-### [Demo / Sandbox](https://tonicdev.com/codemeasandwich/57a0727c80254315001cb366) :thumbsup:
+
+## [Demo / Sandbox](https://tonicdev.com/codemeasandwich/57a0727c80254315001cb366) :thumbsup:
 
 # Install
 
 `npm install graphql-query-builder`
 
 # Api
+
+``` js
+const Query = require('graphql-query-builder');
+```
 
 ### constructor
 query/mutator you wish to use, and an alias or filter arguments.
@@ -45,14 +51,13 @@ profilePicture.setAlias("MyPic");
 ### filter
 the parameters to run the query against.
 
-``` js
-profilePicture.filter({ height : 200, width : 200});
-``` 
-
 | Argument | Description
 |--- |---
 | Object | An object mapping attribute to values
 
+``` js
+profilePicture.filter({ height : 200, width : 200});
+``` 
 
 ### find
 outlines the properties you wish to be returned from the query.
@@ -145,4 +150,3 @@ let MessageQuery = new Query("Message","myPost");
     */
     
 ```
-
