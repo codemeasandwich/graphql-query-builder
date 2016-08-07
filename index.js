@@ -39,7 +39,7 @@ function parceFind(_levelA) {
 
 function getGraphQLValue(value) {
       if ("string" === typeof value) {
-        value = JSON.stringify(value)
+        value = JSON.stringify(value);
       } else if (Array.isArray(value)) {
         value = value.map(item => {
             return getGraphQLValue(item);
@@ -111,7 +111,7 @@ function Query(_fnNameS, _aliasS_OR_Filter){
 
     this.setAlias = (_aliasS) =>{
        this.aliasS = _aliasS;
-        return this
+        return this;
     };
     
     this.find = function(findA) { // THIS NEED TO BE A "FUNCTION" to scope 'arguments'
@@ -122,8 +122,8 @@ function Query(_fnNameS, _aliasS_OR_Filter){
         // else it sould be an Object or Array of maped values
         this.bodyS = parceFind((Array.isArray(findA)) ? findA : Array.from(arguments));
         return this;
-    }
-};
+    };
+}
 
 //=====================================================
 //===================================== Query prototype
@@ -138,6 +138,6 @@ Query.prototype = {
         
         return `${ (this.aliasS) ? (this.aliasS + ":") : "" } ${this.fnNameS } ${ (0 < this.headA.length)?"("+this.headA.join(",")+")":"" }  { ${ this.bodyS } }`;
     }
-}
+};
 
 module.exports = Query;

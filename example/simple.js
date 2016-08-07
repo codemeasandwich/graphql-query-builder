@@ -20,7 +20,7 @@ var Query = require('../');
 let profilePicture = new Query("profilePicture",{size : 50});
     profilePicture.find( "uri", "width", "height");
 let user = new Query("user",{id : 3500401});
-    user.find(["id", {"nickname":"name"}, "isViewerFriend",  {"image":profilePicture}])
+    user.find(["id", {"nickname":"name"}, "isViewerFriend",  {"image":profilePicture}]);
 
   logger.log("user",user+"");
 /*
@@ -47,4 +47,4 @@ let sam = new Query("user","sam");
   sam.find("name");
   logger.log("sam",sam+"");
   
- console.log(FetchLeeAndSam.find(lee,sam)+"")
+ console.log(FetchLeeAndSam.find(lee,sam)+"");
