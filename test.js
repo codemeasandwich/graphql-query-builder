@@ -16,6 +16,13 @@ describe("graphql query builder", function() { //log the function
 		expect(removeSpaces(expeted)).to.equal(removeSpaces(user));
 	});
 	
+	it('should accept a single find value', function(){
+		let expeted = `user{age}`;
+		let user = new Query("user").find("age");
+		
+		expect(removeSpaces(expeted)).to.equal(removeSpaces(user));
+	});
+	
 	it('should create a Query with function name & alia', function(){
 		
 		let expeted = `sam : user{name}`;
@@ -36,13 +43,6 @@ describe("graphql query builder", function() { //log the function
 		
 		let expeted = `user(id:12345, age:34){name}`;
 		let user = new Query("user",{id : 12345, age:34}).find("name");
-		
-		expect(removeSpaces(expeted)).to.equal(removeSpaces(user));
-	});
-	
-	it('should accept a single find value', function(){
-		let expeted = `user{name}`;
-		let user = new Query("user").find("name");
 		
 		expect(removeSpaces(expeted)).to.equal(removeSpaces(user));
 	});
@@ -189,8 +189,7 @@ describe("graphql query builder", function() { //log the function
 	});
 	
 	it('should throw Error if you accidentally pass an undefined', function(){
-		let alia = undefined;
-		expect(() => new Query("x",alia)).to.throw(Error);
+		expect(() => new Query("x",undefined)).to.throw(Error);
 	});
 	
 	it('should throw Error it is not an input object for alias', function(){

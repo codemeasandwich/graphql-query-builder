@@ -103,7 +103,7 @@ function Query(_fnNameS, _aliasS_OR_Filter){
       this.aliasS = _aliasS_OR_Filter;
     } else if ("object" === typeof _aliasS_OR_Filter) {
         this.filter(_aliasS_OR_Filter);
-    } else if (undefined === _aliasS_OR_Filter && 2 == arguments.length){
+    } else if (undefined === _aliasS_OR_Filter && 2 === arguments.length){
         throw new TypeError("You have passed undefined as Second argument to 'Query'");
     } else if (undefined !== _aliasS_OR_Filter){
         throw new TypeError("Second argument to 'Query' should be an alias name(String) or filter arguments(Object). was passed "+_aliasS_OR_Filter);
