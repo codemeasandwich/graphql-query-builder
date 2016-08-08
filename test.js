@@ -10,17 +10,17 @@ describe("graphql query builder", function() { //log the function
 	
 	it('should allow function chaining', function(){
 		
-		let expeted = `user{name}`;
-		let user = new Query("user").find("name");
+		let expetedName = `user{name}`;
+		let userName = new Query("user").find("name");
 		
-		expect(removeSpaces(expeted)).to.equal(removeSpaces(user));
+		expect(removeSpaces(expetedName)).to.equal(removeSpaces(userName));
 	});
 	
 	it('should accept a single find value', function(){
-		let expeted = `user{age}`;
-		let user = new Query("user").find("age");
+		let expetedAge = `user{age}`;
+		let userAge = new Query("user").find("age");
 		
-		expect(removeSpaces(expeted)).to.equal(removeSpaces(user));
+		expect(removeSpaces(expetedAge)).to.equal(removeSpaces(userAge));
 	});
 	
 	it('should create a Query with function name & alia', function(){

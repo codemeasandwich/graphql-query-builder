@@ -8,6 +8,9 @@
 [![Coverage Status](https://coveralls.io/repos/github/codemeasandwich/graphql-query-builder/badge.svg?branch=master)](https://coveralls.io/github/codemeasandwich/graphql-query-builder?branch=master)
 [![bitHound Overall Score](https://www.bithound.io/github/codemeasandwich/graphql-query-builder/badges/score.svg)](https://www.bithound.io/github/codemeasandwich/graphql-query-builder)
 
+
+![pull requests welcome](https://img.shields.io/badge/Pull%20requests-welcome-pink.svg)
+
 a simple but powerful graphQL query builder
 
 *tested on [**NodeJS**](https://nodejs.org) and [**Webpack**](https://webpack.github.io)*
