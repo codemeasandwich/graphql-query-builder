@@ -10,10 +10,10 @@ describe("graphql query builder", function() { //log the function
 	
 	it('should allow function chaining', function(){
 		
-		let expetedName = `user{name}`;
-		let userName = new Query("user").find("name");
+		let expetedName = `profile{name}`;
+		let profileName = new Query("profile").find("name");
 		
-		expect(removeSpaces(expetedName)).to.equal(removeSpaces(userName));
+		expect(removeSpaces(expetedName)).to.equal(removeSpaces(profileName));
 	});
 	
 	it('should accept a single find value', function(){
