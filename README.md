@@ -1,19 +1,27 @@
 # graphql-query-builder
 
-### If this was helpful, [★ it on github](https://github.com/codemeasandwich/graphql-query-builder)
+a simple but powerful graphQL query builder
+
+**info:**
 
 [![npm version](https://badge.fury.io/js/graphql-query-builder.svg)](https://badge.fury.io/js/graphql-query-builder)
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
+[![pull requests welcome](https://img.shields.io/badge/Pull%20requests-welcome-pink.svg)](https://github.com/codemeasandwich/graphql-query-builder/pulls)
+
+
+**tests:**
+
 [![build](https://api.travis-ci.org/codemeasandwich/graphql-query-builder.svg)](https://travis-ci.org/codemeasandwich/graphql-query-builder)
 [![Coverage Status](https://coveralls.io/repos/github/codemeasandwich/graphql-query-builder/badge.svg?branch=master)](https://coveralls.io/github/codemeasandwich/graphql-query-builder?branch=master)
+
+
+**quality:**
+
 [![Code Climate](https://codeclimate.com/github/codemeasandwich/graphql-query-builder/badges/gpa.svg)](https://codeclimate.com/github/codemeasandwich/graphql-query-builder)
 [![bitHound Overall Score](https://www.bithound.io/github/codemeasandwich/graphql-query-builder/badges/score.svg)](https://www.bithound.io/github/codemeasandwich/graphql-query-builder)
 [![Issue Count](https://codeclimate.com/github/codemeasandwich/graphql-query-builder/badges/issue_count.svg)](https://codeclimate.com/github/codemeasandwich/graphql-query-builder)
 
-
-![pull requests welcome](https://img.shields.io/badge/Pull%20requests-welcome-pink.svg)
-
-a simple but powerful graphQL query builder
+### If this was helpful, [★ it on github](https://github.com/codemeasandwich/graphql-query-builder)
 
 *tested on [**NodeJS**](https://nodejs.org) and [**Webpack**](https://webpack.github.io)*
 

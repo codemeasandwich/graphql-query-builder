@@ -8,19 +8,11 @@ function removeSpaces(textS) {
 
 describe("graphql query builder", function() { //log the function
 	
-	it('should allow function chaining', function(){
-		
-		let expetedName = `profile{name}`;
-		let profileName = new Query("profile").find("name");
-		
-		expect(removeSpaces(expetedName)).to.equal(removeSpaces(profileName));
-	});
-	
 	it('should accept a single find value', function(){
-		let expetedAge = `user{age}`;
-		let userAge = new Query("user").find("age");
+		let expeted = `user{age}`;
+		let user = new Query("user").find("age");
 		
-		expect(removeSpaces(expetedAge)).to.equal(removeSpaces(userAge));
+		expect(removeSpaces(expeted)).to.equal(removeSpaces(user));
 	});
 	
 	it('should create a Query with function name & alia', function(){
