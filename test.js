@@ -179,10 +179,6 @@ describe("graphql query builder", function() { //log the function
     expect(() => new Query("x").find()).to.throw(Error);
   });
 
-  it('should throw Error if no find values have been set', function(){
-    expect(() => `${new Query("x")}`).to.throw(Error);
-  });
-
   it('should throw Error if find is not valid', function(){
     expect(() => new Query("x").find(123)).to.throw(Error);
   });
