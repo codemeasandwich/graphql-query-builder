@@ -5,14 +5,14 @@
 //=====================================================
 
 function parceFind(_levelA) {
-    
+
 //+++++++++++++++++++++++++++++++++++ work over Array
 //++++++++++++++++++++++++++++++++++++++++++++++++++++
-     
+
     let propsA = _levelA.map(function(currentValue, index) {
-        
+
         let itemX = _levelA[index];
-        
+
         if( itemX instanceof Query){
             return itemX.toString();
         } else if ( ! Array.isArray(itemX) && "object" === typeof itemX ) {
@@ -29,7 +29,7 @@ function parceFind(_levelA) {
             throw new RangeError("cannot handle Find value of "+itemX);
         }
     });
-    
+
     return propsA.join(",");
 }
 
@@ -56,9 +56,9 @@ function getGraphQLValue(value) {
 }
 
 function objectToString(obj) {
-    
+
   let sourceA = [];
-  
+
   for(let prop in obj){
     if ("function" === typeof obj[prop]) {
       continue;
@@ -80,12 +80,12 @@ function objectToString(obj) {
 //=====================================================
 
 function Query(_fnNameS, _aliasS_OR_Filter){
-    
+
     this.fnNameS = _fnNameS;
     this.headA = [];
-    
+
     this.filter = (filtersO) => {
- 
+
         for(let propS in filtersO){
             if ("function" === typeof filtersO[propS]) {
               continue;
@@ -95,10 +95,10 @@ function Query(_fnNameS, _aliasS_OR_Filter){
               continue;
             }
             this.headA.push( `${propS}:${val}` );
-         } 
+         }
         return this;
     };
-    
+
     if ("string" === typeof _aliasS_OR_Filter) {
       this.aliasS = _aliasS_OR_Filter;
     } else if ("object" === typeof _aliasS_OR_Filter) {
@@ -113,7 +113,7 @@ function Query(_fnNameS, _aliasS_OR_Filter){
        this.aliasS = _aliasS;
         return this;
     };
-    
+
     this.find = function(findA) { // THIS NEED TO BE A "FUNCTION" to scope 'arguments'
         if( ! findA){
             throw new TypeError("find value can not be >>falsy<<");
@@ -130,12 +130,12 @@ function Query(_fnNameS, _aliasS_OR_Filter){
 //=====================================================
 
 Query.prototype = {
-    
+
     toString : function(){
         if (undefined === this.bodyS) {
             throw new ReferenceError("return properties are not defined. use the 'find' function to defined them");
         }
-        
+
         return `${ (this.aliasS) ? (this.aliasS + ":") : "" } ${this.fnNameS } ${ (0 < this.headA.length)?"("+this.headA.join(",")+")":"" }  { ${ this.bodyS } }`;
     }
 };
