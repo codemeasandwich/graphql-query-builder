@@ -132,11 +132,7 @@ function Query(_fnNameS, _aliasS_OR_Filter){
 Query.prototype = {
 
     toString : function(){
-        if (undefined === this.bodyS) {
-            throw new ReferenceError("return properties are not defined. use the 'find' function to defined them");
-        }
-
-        return `${ (this.aliasS) ? (this.aliasS + ":") : "" } ${this.fnNameS } ${ (0 < this.headA.length)?"("+this.headA.join(",")+")":"" }  { ${ this.bodyS } }`;
+        return `${ (this.aliasS) ? (this.aliasS + ":") : "" } ${this.fnNameS } ${ (0 < this.headA.length)?"("+this.headA.join(",")+")":"" } ${ (this.bodyS) ? "{"+this.bodyS+"}" : "" }`;
     }
 };
 

@@ -8,6 +8,13 @@ function removeSpaces(textS) {
 
 describe("graphql query builder", function() { //log the function
 
+  it('should create a Query with no find values', function(){
+    let expeted = `user`;
+    let user = new Query("user");
+
+    expect(removeSpaces(expeted)).to.equal(removeSpaces(user));
+  });
+
   it('should accept a single find value', function(){
     let expeted = `user{age}`;
     let user = new Query("user").find("age");
