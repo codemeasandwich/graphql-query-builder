@@ -22,6 +22,10 @@ function parceFind(_levelA) {
             }
             let propS = propsA[0];
             let item = itemX[propS];
+            // contributor: https://github.com/charlierudolph/graphql-query-builder/commit/878328e857e92d140f5ba6f7cfe07837620ec490
+            if (Array.isArray(item)) {
+              return new Query(propS).find(item)
+            }
             return `${propS} : ${item} `;
         } else if ( "string" === typeof itemX ) {
             return itemX;

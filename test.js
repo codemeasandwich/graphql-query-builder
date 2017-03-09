@@ -76,6 +76,16 @@ describe("graphql query builder", function() { //log the function
 		expect(removeSpaces(expeted)).to.equal(removeSpaces(user));
 	});
 	
+  it('should work with simple nesting Querys', function(){
+
+    let expeted = `user { profilePicture { uri, width, height } }`
+
+    let user = new Query("user");
+      user.find({"profilePicture": ['uri', 'width', 'height']});
+
+    expect(removeSpaces(expeted)).to.equal(removeSpaces(user));
+  });
+  
 	it('should be able to group Querys', function(){
 		
 		let expeted = `FetchLeeAndSam { lee: user(id: "1") { name	},

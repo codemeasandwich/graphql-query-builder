@@ -161,5 +161,34 @@ let MessageQuery = new Query("Message","myPost");
             postedTime : createTime
         }
     */
+
+    // Simple nesting
     
+    let user = new Query("user");
+        user.find([{"profilePicture":["uri", "width", "height"]}])
+    
+    /* 
+    user {
+      profilePicture {
+        uri,
+        width,
+        height
+       }
+     }
+    */ 
+    
+    // Simple nesting with rename
+    
+    let user = new Query("user");
+        user.find([{"image":{"profilePicture":["uri", "width", "height"]}}])
+    
+    /* 
+    user {
+      image : profilePicture {
+        uri,
+        width,
+        height
+       }
+     }
+    */ 
 ```
