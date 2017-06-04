@@ -7,6 +7,7 @@ a simple but powerful graphQL query builder
 [![npm version](https://badge.fury.io/js/graphql-query-builder.svg)](https://badge.fury.io/js/graphql-query-builder)
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
 [![pull requests welcome](https://img.shields.io/badge/Pull%20requests-welcome-pink.svg)](https://github.com/codemeasandwich/graphql-query-builder/pulls)
+[![GitHub stars](https://img.shields.io/github/stars/codemeasandwich/graphql-query-builder.svg?style=social&label=Star)](https://github.com/codemeasandwich/graphql-query-builder)
 
 
 **tests:**
