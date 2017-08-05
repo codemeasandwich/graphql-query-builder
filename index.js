@@ -49,7 +49,7 @@ function getGraphQLValue(value) {
             return getGraphQLValue(item);
             }).join();
         value = `[${value}]`;
-      } else if ("object" === typeof value) {
+      } else if (value !== null & "object" === typeof value) {
       /*if (value.toSource)
             value = value.toSource().slice(2,-2);
         else*/
