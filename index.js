@@ -50,7 +50,7 @@ function getGraphQLValue(value) {
             }).join();
         value = `[${value}]`;
       } else if (value instanceof Date) {
-        value = value.toString();
+        value = JSON.stringify(value);
       } else if (value !== null & "object" === typeof value) {
       /*if (value.toSource)
             value = value.toSource().slice(2,-2);
