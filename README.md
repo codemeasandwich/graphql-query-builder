@@ -1,6 +1,8 @@
-# Im looking for a new maintainer! 
+# >> looking for a new maintainer! 
 
-#graphql-query-builder
+# graphql-query-builder
+
+### For a maintained alternative: [graphql-tools](https://github.com/apollographql/graphql-tools)
 
 a simple but powerful graphQL query builder
 
