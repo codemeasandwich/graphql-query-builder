@@ -1,4 +1,6 @@
-# graphql-query-builder
+# Im looking for a new maintainer! 
+
+#graphql-query-builder
 
 a simple but powerful graphQL query builder
 
