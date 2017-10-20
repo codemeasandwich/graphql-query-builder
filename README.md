@@ -2,7 +2,8 @@
 
 # graphql-query-builder
 
-### For a maintained alternative: [graphql-tools](https://github.com/apollographql/graphql-tools)
+### This version works ^_^
+### but for a maintained alternative see wix's [graphql-query-builder](https://github.com/wix/graphql-query-builder)
 
 a simple but powerful graphQL query builder
 
