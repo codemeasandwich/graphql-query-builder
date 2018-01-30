@@ -43,7 +43,9 @@ function parceFind(_levelA) {
 //=====================================================
 
 function getGraphQLValue(value) {
-  if ("string" === typeof value) {
+  if (value === null) {
+    return value;
+  } else if ("string" === typeof value) {
     value = JSON.stringify(value);
   } else if (Array.isArray(value)) {
     value = value
@@ -57,6 +59,7 @@ function getGraphQLValue(value) {
             value = value.toSource().slice(2,-2);
         else*/
     value = objectToString(value);
+    if (value === "{}") return undefined;
     //console.error("No toSource!!",value);
   }
   return value;
@@ -70,7 +73,10 @@ function objectToString(obj) {
       continue;
     }
     // if ("object" === typeof obj[prop]) {
-    sourceA.push(`${prop}:${getGraphQLValue(obj[prop])}`);
+    let value = getGraphQLValue(obj[prop]);
+    if (typeof value !== "undefined") {
+      sourceA.push(`${prop}:${value}`);
+    }
     // } else {
     //      sourceA.push(`${prop}:${obj[prop]}`);
     // }
@@ -92,10 +98,9 @@ function Query(_fnNameS, _aliasS_OR_Filter) {
         continue;
       }
       let val = getGraphQLValue(filtersO[propS]);
-      if ("{}" === val) {
-        continue;
+      if (typeof val !== "undefined") {
+        this.headA.push(`${propS}:${val}`);
       }
-      this.headA.push(`${propS}:${val}`);
     }
     return this;
   };

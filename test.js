@@ -169,6 +169,22 @@ describe("graphql query builder", function() {
     expect(removeSpaces(expeted)).to.equal(removeSpaces(ItemQuery));
   });
 
+  it("should skip empty objects in filter/args for nested objects", function() {
+    let expeted =
+      'inventory(toy:"jack in the box",input:{blah:"foo",nullTest:null})  { id }';
+
+    let ChildsToy = {
+      toy: "jack in the box",
+      utils: {},
+      input: { blah: "foo", nullTest: null, objectTest: {} }
+    };
+
+    let ItemQuery = new Query("inventory", ChildsToy);
+    ItemQuery.find("id");
+
+    expect(removeSpaces(expeted)).to.equal(removeSpaces(ItemQuery));
+  });
+
   it("should throw Error if find input items have zero props", function() {
     expect(() => new Query("x").find({})).to.throw(Error);
   });
