@@ -4,6 +4,7 @@
   "description": "a simple but powerful graphQL query builder",
   "main": "dist/index.js",
   "bin": {},
+  "types": "dist/index.d.ts",
   "directories": {
     "example": "example"
   },
