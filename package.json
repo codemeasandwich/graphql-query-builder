@@ -7,9 +7,9 @@
   "directories": {
     "example": "example"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "chai": "^3.5.0",
     "coveralls": "^2.11.12",
     "istanbul": "^0.4.4",
@@ -18,6 +18,7 @@
   },
   "scripts": {
     "build": "tsc -p .",
+    "clean": "rm -rf dist/*",
     "test": "mocha ./test.js",
     "test-travis": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test.js"
   },

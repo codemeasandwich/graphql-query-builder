@@ -1,3 +1,4 @@
+import "core-js";
 declare namespace GraphQLQueryBuilder {
     interface FilterMap {
         [key: string]: FilterMap | string | number;
