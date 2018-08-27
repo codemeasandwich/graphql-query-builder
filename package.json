@@ -1,20 +1,23 @@
 {
   "name": "graphql-query-builder",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "a simple but powerful graphQL query builder",
-  "main": "index.js",
+  "main": "dist/index.js",
   "bin": {},
   "directories": {
     "example": "example"
   },
-  "dependencies": {},
+  "dependencies": {
+  },
   "devDependencies": {
     "chai": "^3.5.0",
     "coveralls": "^2.11.12",
     "istanbul": "^0.4.4",
-    "mocha": "^3.0.1"
+    "mocha": "^3.0.1",
+    "typescript": "^3.0.1"
   },
   "scripts": {
+    "build": "tsc -p .",
     "test": "mocha ./test.js",
     "test-travis": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test.js"
   },
