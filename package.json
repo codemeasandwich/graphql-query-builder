@@ -10,6 +10,7 @@
   "dependencies": {},
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
     "chai": "^3.5.0",
     "coveralls": "^2.11.12",
     "istanbul": "^0.4.4",
@@ -17,7 +18,7 @@
     "typescript": "^3.0.1"
   },
   "scripts": {
-    "build": "tsc -p .",
+    "build": "tsc -p . && babel dist -d dist",
     "clean": "rm -rf dist/*",
     "test": "mocha ./test.js",
     "test-travis": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test.js"

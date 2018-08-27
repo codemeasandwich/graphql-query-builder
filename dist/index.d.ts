@@ -1,4 +1,4 @@
-import "core-js";
+import 'babel-polyfill';
 declare namespace GraphQLQueryBuilder {
     interface FilterMap {
         [key: string]: FilterMap | string | number;
