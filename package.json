@@ -1,28 +1,34 @@
 {
-  "name": "graphql-query-builder",
-  "version": "1.0.7",
+  "name": "mab-graphql-query-assembler",
+  "version": "1.0.9",
   "description": "a simple but powerful graphQL query builder",
-  "main": "index.js",
+  "main": "dist/index.js",
   "bin": {},
+  "types": "dist/index.d.ts",
   "directories": {
     "example": "example"
   },
   "dependencies": {},
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
     "chai": "^3.5.0",
     "coveralls": "^2.11.12",
     "istanbul": "^0.4.4",
-    "mocha": "^3.0.1"
+    "mocha": "^3.0.1",
+    "typescript": "^3.0.1"
   },
   "scripts": {
+    "build": "tsc -p . && babel dist -d dist",
+    "clean": "rm -rf dist/*",
     "test": "mocha ./test.js",
     "test-travis": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test.js"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/codemeasandwich/graphql-query-builder.git"
+    "url": "git://github.com/autobrain-stanley/mab-graphql-query-assembler.git"
   },
-  "homepage": "https://github.com/codemeasandwich/graphql-query-builder",
+  "homepage": "https://github.com/autobrain-stanley/mab-graphql-query-assembler",
   "keywords": [
     "graphql",
     "query",
@@ -32,11 +38,11 @@
     "queries"
   ],
   "author": {
-    "name": "Brian Shannon",
-    "url": "https://github.com/codemeasandwich/"
+    "name": "Eddie Stanley",
+    "url": "https://github.com/autobrain-stanley/"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/codemeasandwich/graphql-query-builder/issues"
+    "url": "https://github.com/autobrain-stanley/mab-graphql-query-assembler/issues"
   }
 }
