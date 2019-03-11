@@ -1,147 +1,179 @@
-"use strict";
-
-//=====================================================
-//============================ parce properties to find
-//=====================================================
-
-function parceFind(_levelA) {
-    
-//+++++++++++++++++++++++++++++++++++ work over Array
-//++++++++++++++++++++++++++++++++++++++++++++++++++++
-     
-    let propsA = _levelA.map(function(currentValue, index) {
-        
-        let itemX = _levelA[index];
-        
-        if( itemX instanceof Query){
-            return itemX.toString();
-        } else if ( ! Array.isArray(itemX) && "object" === typeof itemX ) {
-            let propsA = Object.keys(itemX);
-            if ( 1 !== propsA.length) {
-                throw new RangeError("Alias objects should only have one value. was passed: "+JSON.stringify(itemX));
-            }
-            let propS = propsA[0];
-            let item = itemX[propS];
-            // contributor: https://github.com/charlierudolph/graphql-query-builder/commit/878328e857e92d140f5ba6f7cfe07837620ec490
-            if (Array.isArray(item)) {
-              return new Query(propS).find(item)
-            }
-            return `${propS} : ${item} `;
-        } else if ( "string" === typeof itemX ) {
-            return itemX;
-        } else {
-            throw new RangeError("cannot handle Find value of "+itemX);
-        }
-    });
-    
-    return propsA.join(",");
-}
-
-//=====================================================
-//=================================== get GraphQL Value
-//=====================================================
-
-function getGraphQLValue(value) {
-      if ("string" === typeof value) {
-        value = JSON.stringify(value);
-      } else if (Array.isArray(value)) {
-        value = value.map(item => {
-            return getGraphQLValue(item);
-            }).join();
-        value = `[${value}]`;
-      } else if ("object" === typeof value) {
-      /*if (value.toSource)
-            value = value.toSource().slice(2,-2);
-        else*/
-            value = objectToString(value);
-            //console.error("No toSource!!",value);
-      }
-      return value;
-}
-
-function objectToString(obj) {
-    
-  let sourceA = [];
-  
-  for(let prop in obj){
-    if ("function" === typeof obj[prop]) {
-      continue;
-    }
-   // if ("object" === typeof obj[prop]) {
-        sourceA.push(`${prop}:${getGraphQLValue(obj[prop])}`);
-   // } else {
-   //      sourceA.push(`${prop}:${obj[prop]}`);
-   // }
-  }
-  return `{${sourceA.join()}}`;
-}
-
-
-
-
-//=====================================================
-//========================================= Query Class
-//=====================================================
-
-function Query(_fnNameS, _aliasS_OR_Filter){
-    
-    this.fnNameS = _fnNameS;
-    this.headA = [];
-    
-    this.filter = (filtersO) => {
- 
-        for(let propS in filtersO){
-            if ("function" === typeof filtersO[propS]) {
-              continue;
-            }
-            let val = getGraphQLValue(filtersO[propS]);
-            if ("{}" === val) {
-              continue;
-            }
-            this.headA.push( `${propS}:${val}` );
-         } 
-        return this;
-    };
-    
-    if ("string" === typeof _aliasS_OR_Filter) {
-      this.aliasS = _aliasS_OR_Filter;
-    } else if ("object" === typeof _aliasS_OR_Filter) {
-        this.filter(_aliasS_OR_Filter);
-    } else if (undefined === _aliasS_OR_Filter && 2 === arguments.length){
-        throw new TypeError("You have passed undefined as Second argument to 'Query'");
-    } else if (undefined !== _aliasS_OR_Filter){
-        throw new TypeError("Second argument to 'Query' should be an alias name(String) or filter arguments(Object). was passed "+_aliasS_OR_Filter);
-    }
-
-    this.setAlias = (_aliasS) =>{
-       this.aliasS = _aliasS;
-        return this;
-    };
-    
-    this.find = function(findA) { // THIS NEED TO BE A "FUNCTION" to scope 'arguments'
-        if( ! findA){
-            throw new TypeError("find value can not be >>falsy<<");
-        }
-        // if its a string.. it may have other values
-        // else it sould be an Object or Array of maped values
-        this.bodyS = parceFind((Array.isArray(findA)) ? findA : Array.from(arguments));
-        return this;
-    };
-}
-
-//=====================================================
-//===================================== Query prototype
-//=====================================================
-
-Query.prototype = {
-    
-    toString : function(){
-        if (undefined === this.bodyS) {
-            throw new ReferenceError("return properties are not defined. use the 'find' function to defined them");
-        }
-        
-        return `${ (this.aliasS) ? (this.aliasS + ":") : "" } ${this.fnNameS } ${ (0 < this.headA.length)?"("+this.headA.join(",")+")":"" }  { ${ this.bodyS } }`;
-    }
+/* eslint-disable require-jsdoc, yoda, no-use-before-define */
+const MSG = {
+    INVALID_SECOND_ARG: 'Second argument to should be an alias name(String) or filter arguments(Object). Instead: ',
+    UNDEFINED_SECOND_ARG: 'You have passed undefined as Second argument to \'Query\'',
+    INVALID_ALIAS: 'Alias objects should only have one value. Instead: ',
+    MISSING_RETURN_PROPERTIES: 'return properties are not defined. use the \'select\' function to defined them',
+    INVALID_SELECT: 'Cannot handle select value of ',
+    FALSY_SELECT: 'select value can not be >>falsy<<'
 };
 
-module.exports = Query;
+class Query {
+    constructor(field, fieldAlias_OR_args) {
+
+        this.field = field;
+        this.args = [];
+
+        if ('string' === typeof fieldAlias_OR_args) {
+            this.fieldAlias = fieldAlias_OR_args;
+        } else if ('object' === typeof fieldAlias_OR_args) {
+            this.filter(fieldAlias_OR_args);
+        } else if (undefined !== fieldAlias_OR_args) {
+            throw new TypeError(MSG.INVALID_SECOND_ARG + fieldAlias_OR_args);
+        }
+    }
+
+    /**
+     * Provide arguments to the Query or Mutation
+     * @param {object} args
+     * @return {Query}
+     */
+    filter(args) {
+
+        Object.keys(args).forEach((filterKey) => {
+            if ('function' === typeof args[filterKey]) {
+                return;
+            }
+            const filterValue = this._getGraphQLValue(args[filterKey]);
+            if ('{}' === filterValue) {
+                return;
+            }
+            this.args.push(`${filterKey}:${filterValue}`);
+        });
+
+        return this;
+    }
+
+    /**
+     * get GraphQL Value
+     * @param {string|Array<String>|object} value
+     * @return {string}
+     * @private
+     */
+    _getGraphQLValue(value) {
+        let graphQLValue;
+        if ('string' === typeof value) {
+            graphQLValue = JSON.stringify(value);
+        } else if (Array.isArray(value)) {
+            graphQLValue = value.map((item) => {
+                return this._getGraphQLValue(item);
+            }).join();
+            graphQLValue = `[${graphQLValue}]`;
+        } else if ('object' === typeof value) {
+            graphQLValue = this._objectToString(value);
+        } else {
+            graphQLValue = value;
+        }
+        return graphQLValue;
+    }
+
+    /**
+     * @param {object} obj
+     * @return {string}
+     * @private
+     */
+    _objectToString(obj) {
+
+        const sourceA = [];
+
+        Object.keys(obj).forEach((key) => {
+            if ('function' === typeof obj[key]) {
+                return;
+            }
+            sourceA.push(`${key}:${this._getGraphQLValue(obj[key])}`);
+        });
+        return `{${sourceA.join()}}`;
+    }
+
+    setAlias(_fieldAlias) {
+        this.fieldAlias = _fieldAlias;
+        return this;
+    }
+
+    /**
+     * Select the values that you would like returned in the response from the server
+     * @param {Array<string|object>} selectionFields
+     * @return {Query}
+     */
+    select(selectionFields) {
+        if (!selectionFields) {
+            throw new TypeError(MSG.FALSY_SELECT);
+        }
+        // If its a string, then it may have other values
+        // else it should be an Object or Array of mapped values
+        const selectionArray = Array.isArray(selectionFields) ? selectionFields : Array.from(arguments);
+        this.selectionFields = this._parseSelection(selectionArray);
+        return this;
+    }
+
+    find(selectionFields) {
+        return this.select(selectionFields);
+    }
+
+    /**
+     * parse properties to find
+     * @param {Array} selectionFields
+     * @return {string}
+     * @private
+     */
+    _parseSelection(selectionFields) {
+
+        const selection = selectionFields.map(function(returnProperty) {
+            if (returnProperty instanceof Query) {
+                return returnProperty.toString();
+            } else if (!Array.isArray(returnProperty) && 'object' === typeof returnProperty) {
+                const filterKeysA = Object.keys(returnProperty);
+                if (1 !== filterKeysA.length) {
+                    throw new RangeError(MSG.INVALID_ALIAS + JSON.stringify(returnProperty));
+                }
+                const filterKey = filterKeysA[0];
+                const item = returnProperty[filterKey];
+                if (Array.isArray(item)) {
+                    return new Nested(filterKey).select(item);
+                }
+                return `${filterKey} : ${item} `;
+            } else if ('string' === typeof returnProperty) {
+                return returnProperty;
+            } else {
+                throw new RangeError(MSG.INVALID_SELECT + returnProperty);
+            }
+        });
+
+        return selection.join(',');
+    }
+
+    /**
+     * @return {string}
+     * @private
+     */
+    _baseToString() {
+        const fieldAlias = this.fieldAlias ? this.fieldAlias + ':' : '';
+        const args = 0 < this.args.length ? '(' + this.args.join(',') + ')' : '';
+        const selection = this.selectionFields ? '{' + this.selectionFields + '}' : '';
+        return `${fieldAlias} ${this.field} ${args} ${selection}`;
+    }
+
+    toString() {
+        if (undefined === this.selectionFields) {
+            throw new ReferenceError(MSG.MISSING_RETURN_PROPERTIES);
+        }
+        return `query {${this._baseToString()}}`;
+    }
+}
+
+class Mutation extends Query {
+    toString() {
+        return `mutation {${this._baseToString()}}`;
+    }
+}
+class Nested extends Query {
+    toString() {
+        return this._baseToString();
+    }
+}
+
+module.exports = {
+    Query,
+    Mutation,
+    Nested
+};
