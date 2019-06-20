@@ -30,6 +30,8 @@ a simple but powerful graphQL query builder
 
 ## [Demo / Sandbox](https://tonicdev.com/codemeasandwich/57a0727c80254315001cb366) :thumbsup:
 
+ [![Buy me a coffee](https://img.shields.io/badge/buy%20me-a%20coffee-orange.svg)](https://www.buymeacoffee.com/codemeasandwich)
+
 # Install
 
 `npm install graphql-query-builder`
