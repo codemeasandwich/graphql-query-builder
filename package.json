@@ -2,19 +2,22 @@
   "name": "graphql-query-builder",
   "version": "1.0.7",
   "description": "a simple but powerful graphQL query builder",
-  "main": "index.js",
+  "main": "lib/index.js",
   "bin": {},
   "directories": {
     "example": "example"
   },
   "dependencies": {},
   "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-env": "^1.6.0",
     "chai": "^3.5.0",
     "coveralls": "^2.11.12",
     "istanbul": "^0.4.4",
     "mocha": "^3.0.1"
   },
   "scripts": {
+    "build": "babel index.js -d lib",
     "test": "mocha ./test.js",
     "test-travis": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test.js"
   },
